@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jade M. Ogden | Professional Portfolio</title>
+    <style>
+        /* CSS Variables for the "Michelle" Aesthetic Palette */
+        :root {
+            --bg-color: #f9f7f4;
+            /* Warm off-white */
+            --accent-pink: #d9aeb5;
+            /* Muted rose */
+            --text-dark: #4a4a4a;
+            /* Soft charcoal */
+            --header-bg: #ffffff;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* --- Header & Navigation --- */
+        header {
+            background-color: var(--header-bg);
+            padding: 20px 10%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: var(--card-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .Back-to-Scratch-Sheet {
+            position: fixed;
+            top: 20px;
+            /* Distance from the bottom */
+            left: 20px;
+            /* Distance from the right */
+
+            /* Styling the button */
+            background-color: #d9aeb5;
+            color: #4a4a4a;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-family: sans-serif;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 2000;
+        }
+
+        .Back-to-Scratch-Sheet:hover {
+            background-color: #c5808c;
+            /* Darker shade on hover */
+
+        }
+
+        .header-name {
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-links a {
+            text-decoration: none;
+            color: var(--accent-pink);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .social-links a:hover {
+            color: var(--text-dark);
+            transform: translateY(-2px);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Main Content Layout --- */
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: var(--card-shadow);
+        }
+
+        h2 {
+            color: var(--accent-pink);
+            border-bottom: 2px solid var(--bg-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.2rem;
+        }
+
+        /* --- Resume Specific Styles --- */
+        .resume-item {
+            margin-bottom: 30px;
+        }
+
+        .resume-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 5px;
+        }
+
+        .job-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .date-location {
+            font-size: 0.85rem;
+            color: #888;
+            text-align: right;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--accent-pink);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .skill-tag {
+            background: var(--bg-color);
+            padding: 8px 15px;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="index.html" class="Back-to-Scratch-Sheet">Back to Scratch Sheet</a>
+
+    <header>
+        <div class="header-name">JADE M. OGDEN</div>
+        <nav class="social-links">
+            <a href="https://www.instagram.com/jadeogdennn?igsh=MTM2OGcxYXdjeWtsYQ%3D%3D&utm_source=qr"
+                target="_blank">Instagram</a>
+            <a href="https://www.facebook.com/share/1D2LVw8962/?mibextid=wwXIfr" target="_blank">Facebook</a>
+            <a href="https://youtube.com/@jadeogdennn?si=J6guupRX3ayuD3fw" target="_blank">YouTube</a>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <section id="education">
+            <h2>Education</h2>
+            <div class="resume-item">
+                <div class="resume-header">
+                    <div>
+                        <div class="job-title">Brigham Young University - Marriott School of Business</div>
+                        <div>Experience Design and Management</div>
+                    </div>
+                    <div class="date-location">Provo, UT<br>GPA 3.7/4.00</div>
+                </div>
+            </div>
+            <div class="resume-item">
+                <div class="resume-header">
+                    <div>
+                        <div class="job-title">Snow College</div>
+                        <div>Snow College Women's Soccer Team</div>
+                    </div>
+                    <div class="date-location">Ephraim, UT<br>GPA 4.00/4.00</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2>Experience</h2>
+
+            <div class="resume-item">
+                <div class="resume-header">
+                    <div class="job-title">Missionary Training Center | Cantonese Language Instructor</div>
+                    <div class="date-location">Provo, UT<br>Jan 2025 – Current</div>
+                </div>
+                <ul>
+                    <li>Design and lead lessons using approved resources to help missionaries effectively teach gospel
+                        principles in Cantonese.</li>
+                    <li>Guide missionaries in developing teaching skills, scriptural understanding, and communication.
+                    </li>
+                    <li>Teach immersive Cantonese language and cultural instruction to new missionaries.</li>
+                    <li>Facilitate both one-on-one coaching and group instruction, adapting to varying learning styles.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="resume-item">
+                <div class="resume-header">
+                    <div class="job-title">Coldstone | Manager</div>
+                    <div class="date-location">Provo, UT<br>May 2024 – Jan 2025</div>
+                </div>
+                <ul>
+                    <li>Led a high-performing team in a fast-paced environment, ensuring exceptional service and product
+                        quality.</li>
+                    <li>Managed daily operations including cash management, inventory control, and training new
+                        employees.</li>
+                </ul>
+            </div>
+
+            <div class="resume-item">
+                <div class="resume-header">
+                    <div class="job-title">Huntsman Design | Content Creator</div>
+                    <div class="date-location">Las Vegas, NV<br>Feb 2022 – Jun 2022</div>
+                </div>
+                <ul>
+                    <li>Developed and executed successful social media campaigns across multiple platforms to increase
+                        brand awareness.</li>
+                    <li>Managed company social media accounts by creating engaging content and monitoring analytics.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="leadership">
+            <h2>Leadership & Service</h2>
+            <div class="resume-item">
+                <div class="resume-header">
+                    <div class="job-title">Volunteer Representative | LDS Church</div>
+                    <div class="date-location">Hong Kong, China<br>Jul 2022 – Feb 2024</div>
+                </div>
+                <ul>
+                    <li>Mastered Cantonese to effectively communicate and serve local communities in Hong Kong.</li>
+                    <li>Led and mentored a team of 20 young adult volunteers, organizing training and service events.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2>Skills & Interests</h2>
+            <div class="skills-grid">
+                <div class="skill-tag">Fluent Cantonese</div>
+                <div class="skill-tag">Content Creation</div>
+                <div class="skill-tag">Leadership</div>
+                <div class="skill-tag">Problem Solving</div>
+                <div class="skill-tag">Creative Strategy</div>
+                <div class="skill-tag">Emotional Intelligence</div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Jade M. Ogden | Provo, UT | sisterjadeogden@gmail.com</p>
+    </footer>
+
+</body>
+
+</html>

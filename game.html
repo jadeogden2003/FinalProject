@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Float Like a Butterfly 🦋</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(180deg, #d9f7ff, #fce4ff);
+            font-family: "Comic Sans MS", "Arial Rounded MT Bold", cursive;
+            overflow: hidden;
+        }
+
+        /* Ensures instructions and game stay side-by-side */
+        .main-layout {
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .side-panel {
+            width: 240px;
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            border: 4px solid #ffb7ef;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .side-panel h3 {
+            color: #7a5cff;
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .side-panel p {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .game-container {
+            background: #fff6d6;
+            border-radius: 24px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.2);
+            padding: 16px;
+            text-align: center;
+            position: relative;
+        }
+
+        .Back-to-Scratch-Sheet {
+            position: fixed;
+            top: 20px;
+            /* Distance from the bottom */
+            left: 20px;
+            /* Distance from the right */
+
+            /* Styling the button */
+            background-color: #ff8ccf;
+            color: #4a4a4a;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-family: sans-serif;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 4000;
+        }
+
+        .Back-to-Scratch-Sheet:hover {
+            background-color: #da0066;
+            /* Darker shade on hover */
+
+        }
+
+        canvas {
+            border-radius: 20px;
+            border: 4px solid #ffd966;
+            background: linear-gradient(to bottom, #b8f2c2, #fdf6d8);
+            cursor: none;
+        }
+
+        h1 {
+            color: #ff8ccf;
+            margin: 5px 0;
+        }
+
+        .hud {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            color: #7a5cff;
+            font-weight: bold;
+        }
+
+        /* Overlay Screens */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 24px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 100;
+            text-align: center;
+        }
+
+        #stung {
+            background: rgba(255, 180, 180, 0.95);
+            color: #ff2f5e;
+            font-size: 28px;
+        }
+
+        #win-screen {
+            background: #ff8ccf;
+            color: white;
+            font-size: 40px;
+            animation: flashPink 0.4s infinite alternate;
+        }
+
+        @keyframes flashPink {
+            from {
+                background: #ff8ccf;
+            }
+
+            to {
+                background: #ff33aa;
+            }
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 25px;
+            border-radius: 25px;
+            border: none;
+            background: #ffd966;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #e6b800;
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: none;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="index.html" class="Back-to-Scratch-Sheet">Back to Scratch Sheet</a>
+    <div class="main-layout">
+        <div class="side-panel">
+            <h3>Game Info</h3>
+            <p><strong>🦋 Control:</strong> Use Arrow Keys.</p>
+            <p><strong>✨ Invisibility:</strong> Appears every 20s. Gives 5s of safety!</p>
+            <p><strong>❤️ Extra Life:</strong> Appears every 15s to keep you flying.</p>
+            <p><strong>🎯 Mission:</strong> Reach 60 seconds to become <strong>Floatastic!</strong></p>
+        </div>
+
+        <div class="game-container">
+            <h1>🦋 Float Like a Butterfly</h1>
+            <canvas id="game" width="420" height="520"></canvas>
+
+            <div class="hud">
+                <div id="timeDisplay">⏱️ 0s | ❤️ 1</div>
+                <div id="statusDisplay">Visible</div>
+            </div>
+
+            <div class="overlay" id="stung">
+                <b>OUCH! STUNG!</b>
+                <button onclick="reset()">Try Again</button>
+            </div>
+
+            <div class="overlay" id="win-screen">
+                <b>FLOATASTIC!</b>
+                <button onclick="reset()">Play Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("game");
+        const ctx = canvas.getContext("2d");
+
+        let gameActive = true;
+        let startTime = Date.now();
+        let invulnEnd = 0;
+        let lastBeeTime = 0, lastStarTime = 0, lastHeartTime = 0;
+        let lives = 1;
+
+        const player = { x: 210, y: 450, size: 25 };
+        let bees = [{ x: 100, y: 50, speed: 1 }];
+        let star = null; // Invisibility
+        let heart = null; // Extra Life
+
+        function draw() {
+            if (!gameActive) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw "Forest" background
+            ctx.fillStyle = "#90ee90";
+            ctx.fillRect(0, 480, 420, 40);
+
+            // Powerups
+            ctx.font = "30px Arial";
+            if (star) ctx.fillText("✨", star.x, star.y);
+            if (heart) ctx.fillText("❤️", heart.x, heart.y);
+
+            // Player
+            ctx.globalAlpha = Date.now() < invulnEnd ? 0.4 : 1.0;
+            ctx.fillText("🦋", player.x - 15, player.y + 10);
+            ctx.globalAlpha = 1.0;
+
+            // Enemies
+            bees.forEach(b => ctx.fillText("🐝", b.x - 15, b.y + 10));
+
+            update();
+            requestAnimationFrame(draw);
+        }
+
+        function update() {
+            const now = Date.now();
+            const elapsed = Math.floor((now - startTime) / 1000);
+
+            document.getElementById("timeDisplay").innerText = `⏱️ ${elapsed}s | ❤️ ${lives}`;
+            document.getElementById("statusDisplay").innerText = now < invulnEnd ? "✨ INVISIBLE ✨" : "VISIBLE";
+
+            // Check Win Condition
+            if (elapsed >= 60) {
+                gameActive = false;
+                document.getElementById("win-screen").style.display = "flex";
+            }
+
+            // Bee Chasing
+            if (now > invulnEnd) {
+                bees.forEach(b => {
+                    const angle = Math.atan2(player.y - b.y, player.x - b.x);
+                    b.x += Math.cos(angle) * b.speed;
+                    b.y += Math.sin(angle) * b.speed;
+
+                    // Collision with Bee
+                    if (Math.hypot(player.x - b.x, player.y - b.y) < 25) {
+                        if (lives > 1) {
+                            lives--;
+                            invulnEnd = now + 2000; // 2s safety after hit
+                        } else {
+                            gameActive = false;
+                            document.getElementById("stung").style.display = "flex";
+                        }
+                    }
+                });
+            }
+
+            // Spawn Logic
+            if (elapsed % 30 === 0 && elapsed !== lastBeeTime) {
+                bees.push({ x: Math.random() * 400, y: 0, speed: 1.1 });
+                lastBeeTime = elapsed;
+            }
+            if (elapsed % 20 === 0 && elapsed !== lastStarTime) {
+                star = { x: Math.random() * 380 + 20, y: Math.random() * 300 + 100 };
+                lastStarTime = elapsed;
+            }
+            if (elapsed % 15 === 0 && elapsed !== lastHeartTime) {
+                heart = { x: Math.random() * 380 + 20, y: Math.random() * 300 + 100 };
+                lastHeartTime = elapsed;
+            }
+
+            // Pickup Logic
+            if (star && Math.hypot(player.x - star.x, player.y - star.y) < 35) {
+                invulnEnd = now + 5000;
+                star = null;
+            }
+            if (heart && Math.hypot(player.x - heart.x, player.y - heart.y) < 35) {
+                lives++;
+                heart = null;
+            }
+        }
+
+        function reset() {
+            gameActive = true;
+            lives = 1;
+            startTime = Date.now();
+            invulnEnd = 0;
+            lastBeeTime = 0; lastStarTime = 0; lastHeartTime = 0;
+            bees = [{ x: 100, y: 50, speed: 1 }];
+            star = null; heart = null;
+            player.x = 210; player.y = 450;
+            document.getElementById("stung").style.display = "none";
+            document.getElementById("win-screen").style.display = "none";
+            draw();
+        }
+
+        window.addEventListener("keydown", (e) => {
+            const s = 20;
+            if (e.key === "ArrowUp" && player.y > 20) player.y -= s;
+            if (e.key === "ArrowDown" && player.y < 500) player.y += s;
+            if (e.key === "ArrowLeft" && player.x > 20) player.x -= s;
+            if (e.key === "ArrowRight" && player.x < 400) player.x += s;
+        });
+
+        draw();
+    </script>
+
+</body>
+
+</html>

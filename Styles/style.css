@@ -1,0 +1,98 @@
+body {
+    background-color: rgb(255, 255, 225);
+}
+
+h2{
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.common {
+    background-color: rgb(243, 239, 141);
+    border: 3px solid rgb(7, 7, 7);
+    padding: 16px;
+    border-radius: 12px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.page {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.header {
+    text-align: center;
+    width: fit-content;
+    margin: 0 auto 20px auto;
+}
+
+.content {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.left {
+    width: 180px;
+    padding: 4px;
+    text-align: center;
+}
+
+.main {
+    flex: 1;
+    text-align: center;
+}
+
+.yellowtext {
+    font-weight: bold;
+}
+
+.blacktext {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    /* Distance from the bottom */
+    right: 20px;
+    /* Distance from the right */
+
+    /* Styling the button */
+    background-color: rgb(243, 239, 141);
+    color: black;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.back-to-top:hover {
+    background-color: rgb(255, 250, 104);
+    /* Darker shade on hover */
+}
+
+.pro-game {
+    gap: 20px;
+    text-align: center;
+}
+
+.pro-game a {
+    text-decoration: none;
+    color: var(--accent-pink);
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.pro-game a:hover {
+    color: var(--text-dark);
+    transform: translateY(-2px);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
